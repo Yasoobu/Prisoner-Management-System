@@ -3,7 +3,7 @@
 <div>
     <div class="card rounded px-5 py-2">
         <div class="card-body">
-            <form action="EditMedicalForm" class="form needs-validation" role="form" autocomplete="off" method="post">
+            <form onsubmit="return CheckDescription1(this, this)" action="EditMedicalForm" class="form needs-validation" role="form" autocomplete="off" method="post">
 
                 <input type="hidden" class="form-control" id="C_PID" name="MedicalID" value="@Model.MedicalID" required />
 
@@ -20,10 +20,52 @@
                 </div>
 
                 <div>
-                    <button type="submit" class="btn btn-success btn-block">Done</button>
+                    <button type="submit" class="btn btn-success btn-block" onclick=" return CheckDescription1(Symptoms, Diagnosis) " >Done</button>
                 </div>
 
             </form>
         </div>
     </div>
 </div>
+
+
+<!--Javascript Validation-->
+<script>
+    function CheckDescription1(inputtxt, inputtxt1) {
+        // var inputtxt1 = document.getElementById("C_Symp").value;
+        var notallowed1 = /^[0-9 ]+$/;
+        var notallowed2 = /^[()-[] ]+$/;
+        var notallowed3 = /^[0-9()-_ ]+$/;
+        var allowed1 = /^[a-z ]+$/i;
+        var allowed2 = /^[a-z0-9 ]+$/i;
+        var allowed3 = /^[a-z() ]+$/i;
+        var allowed4 = /^[a-z0-9() ]+$/i;
+        if ((!(inputtxt.value.match(notallowed1) || inputtxt.value.match(notallowed2) || inputtxt.value.match(notallowed3))) && (inputtxt.value.match(allowed1) || inputtxt.value.match(allowed2) || inputtxt.value.match(allowed3) || inputtxt.value.match(allowed4)))
+        {
+            if ((!(inputtxt1.value.match(notallowed1) || inputtxt1.value.match(notallowed2) || inputtxt1.value.match(notallowed3))) && (inputtxt1.value.match(allowed1) || inputtxt1.value.match(allowed2) || inputtxt1.value.match(allowed3) || inputtxt1.value.match(allowed4)))
+            {
+                return true;
+            }
+            else
+            {
+                 alert('Invalid Diagnosis or Symptoms. Please enter either alphanumeric or string data');
+                var myElement = document.getElementById("C_Diag");
+                var myElement1 = document.getElementById("C_Symp");
+                myElement.value = "";
+                myElement1.value = "";
+
+                return false;
+            }
+        }
+        else
+        {
+            alert('Invalid Diagnosis or Symptoms. Please enter either alphanumeric or string data');
+            var myElement = document.getElementById("C_Diag");
+            var myElement1 = document.getElementById("C_Symp");
+            myElement.value = "";
+            myElement1.value = "";
+
+            return false;
+        }
+    }
+</script>

@@ -3,7 +3,7 @@
 <div>
     <div class="card rounded px-5 py-2">
         <div class="card-body">
-            <form action="EditAllergyForm" class="form needs-validation" role="form" autocomplete="off" method="post">
+            <form onsubmit="return CheckDescription(this)" action="EditAllergyForm" class="form needs-validation" role="form" autocomplete="off" method="post">
 
                 <input type="hidden" class="form-control" id="C_AID" name="AllergyID" value="@Model.AllergyID" required />
 
@@ -14,10 +14,32 @@
                 </div>
 
                 <div>
-                    <button type="submit" class="btn btn-success btn-block">Done</button>
+                    <button type="submit" class="btn btn-success btn-block" onclick="return CheckDescription(Desc)">Done</button>
                 </div>
 
             </form>
         </div>
     </div>
 </div>
+
+<!--Javascript Validation-->
+<script>
+    function CheckDescription(inputtxt) {
+        var notallowed1 = /^[0-9 ]+$/;
+        var notallowed2 = /^[()-[] ]+$/;
+        var notallowed3 = /^[0-9()-_ ]+$/;
+        var allowed1 = /^[a-z ]+$/i;
+        var allowed2 = /^[a-z0-9 ]+$/i;
+        var allowed3 = /^[a-z() ]+$/i;
+        var allowed4 = /^[a-z0-9() ]+$/i;
+        if ((!(inputtxt.value.match(notallowed1) || inputtxt.value.match(notallowed2) || inputtxt.value.match(notallowed3))) && (inputtxt.value.match(allowed1) || inputtxt.value.match(allowed2) || inputtxt.value.match(allowed3) || inputtxt.value.match(allowed4))) {
+            return true;
+        }
+        else {
+            alert('Invalid Description. Please enter either alphanumeric or string data');
+            var myElement = document.getElementById("C_Desc");
+            myElement.value = "";
+            return false;
+        }
+    }
+</script>

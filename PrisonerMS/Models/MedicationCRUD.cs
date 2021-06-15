@@ -98,6 +98,8 @@ namespace PrisonerMS.Models
 
         public static bool InsertMedication(Medication medication)
         {
+            if (medication.Desc == "None")
+                return false; 
             using (SqlConnection ServerConnection = new SqlConnection(ConnectionString))
             {
                 ServerConnection.Open();
